@@ -1,0 +1,114 @@
+defaults: &defaults
+  docker:
+    - image: circleci/node:12
+
+git-login: &git-login
+  name: Setting up git user
+  command: git config --global user.email ci@ls-age.com && git config --global user.name "ls-age CI"
+
+npm-login: &npm-login
+  name: Logging in to npm
+  command: echo "$NPM_TOKEN" > ~/.npmrc
+
+version: 2
+jobs:
+  install-deps:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-npm-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Installing npm dependencies
+          command: npm ci
+      - save_cache:
+          key: v1-npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  lint-source:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Linting source files
+          command: npm run lint -- --format junit --output-file ~/reports/eslint.xml
+      - store_test_results:
+          path: ~/reports
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Creating reports folder
+          command: mkdir -p ~/reports
+      - run:
+          name: Running tests
+          command: npm run test -- --tap | npx tap-xunit > ~/reports/ava.xml
+      - store_test_results:
+          path: ~/reports
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Bundle app
+          command: npm run build
+      - run:
+          name: Build type definitions
+          command: npm run types
+      - persist_to_workspace:
+          root: .
+          paths:
+            - out
+
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - add_ssh_keys
+      - attach_workspace:
+          at: .
+      - run:
+          <<: *git-login
+      - run:
+          <<: *npm-login
+      - run:
+          name: Deploying changes
+          command: npx @ls-age/bump-version release --gh-token $RELEASE_GITHUB_TOKEN
+
+workflows:
+  version: 2
+
+  build-test-deploy:
+    jobs:
+      - install-deps
+      - lint-source:
+          requires:
+            - install-deps
+      - test:
+          requires:
+            - install-deps
+      - build:
+          requires:
+            - install-deps
+      - deploy:
+          requires:
+            - lint-source
+            - test
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - beta

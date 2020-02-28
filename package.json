@@ -10,7 +10,8 @@
     "dev": "rollup -cw",
     "format": "prettier --ignore-path .gitignore \"**/*\"",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts .",
-    "test": "nyc ava"
+    "test": "nyc ava",
+    "types": "tsc"
   },
   "keywords": [
     "xml",

@@ -56,5 +56,10 @@
     ]
   },
   "module": "out/index.mjs",
+  "renovate": {
+    "extends": [
+      "@ls-age:automergeDev"
+    ]
+  },
   "types": "out/types/index.d.ts"
 }

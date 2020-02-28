@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg atv:contentwidth="1280" version="1.2" atv:contentheight="680" height="800" 
+  xmlns:atv="http://webmi.atvise.com/2007/svgext" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" 
+  xmlns="http://www.w3.org/2000/svg">
+  <defs/>
+  <metadata>
+    <atv:gridconfig height="20" gridstyle="lines" enabled="false" width="20" />
+    <atv:snapconfig height="10" enabled="true" width="10"/>
+  </metadata>
+
+  <svg atv:refpy="59.999" atv:refpx="639.986" id="id_3" height="120" y="0" x="0" width="1280" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.top"/>
+  <![CDATA[
+    characters with markup<X
+  ]]>
+  <!-- This is a comment -->
+  <svg atv:refpy="460" atv:refpx="640" id="id_4" height="600" y="105.882" transform="matrix(1.6,0,0,1.1333,0,0)" x="0" width="800" xlink:href="SYSTEM.LIBRARY.ATVISE.OBJECTDISPLAYS.Advanced.hmi.iframe">
+    <atv:argument name="display" value="AGENT.DISPLAYS.Main"/>
+    <atv:argument name="frameName" value="content"/>
+    <atv:argument name="isNavigationFrame" value="true"/>
+    <atv:overwrite id="label2" y="414.11" transform="matrix(0.625,0,0,0.9231,0,0)" x="415.5"/>
+    <atv:overwrite id="label" y="344.5" transform="matrix(0.625,0,0,0.9231,0,0)" x='549'/>
+  </svg>
+</svg   >

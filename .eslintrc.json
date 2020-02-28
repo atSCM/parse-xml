@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "@ls-age",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "prettier/@typescript-eslint"
+  ],
+  "rules": {
+    "compat/compat": "off"
+  }
+}

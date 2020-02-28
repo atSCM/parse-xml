@@ -1,0 +1,9 @@
+.nyc_output
+coverage
+node_modules
+out
+
+# DO NOT COMMIT
+src/_Parser.ts
+src/Parser.bu.ts
+src/Parser.dirty.ts

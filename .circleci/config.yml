@@ -63,7 +63,7 @@ jobs:
           at: .
       - run:
           name: Bundle app
-          command: npm run compile
+          command: npm run build
       - run:
           name: Build type definitions
           command: npm run types
